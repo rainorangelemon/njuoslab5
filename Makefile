@@ -61,6 +61,7 @@ GAME_O := $(GAME_C:%.c=$(OBJ_DIR)/%.o)
 $(IMAGE): $(BOOT) $(PROGRAM)
 	gcc formatter.c -o formatter
 	gcc copy2myfs.c -o copy2myfs
+	gcc read_myfs.c -o read_myfs
 	./formatter	
 	./copy2myfs $(KERNEL) $(GAME)
 	./copy2myfs game_load.txt
@@ -133,4 +134,5 @@ clean:
 	@rm -rf $(PROGRAM) 2> /dev/null
 	@rm -rf $(IMAGE)   2> /dev/null
 	@rm ./copy2myfs    2> /dev/null
+	@rm ./read_myfs    2> /dev/null
 	@rm ./formatter    2> /dev/null

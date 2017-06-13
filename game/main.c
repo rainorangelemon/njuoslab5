@@ -53,8 +53,9 @@ void producer_consumer(){
 int game_main(){
 	/*producer_consumer();*/
 
-	printf("This is game\n");
-	printf("Please press 9, and then press ENTER to get into the game\n");
+	printf("Welcome to game\n");
+	printf("You do not have to press enter any more!\n");
+	printf("Also, I build the load function. You can quit at any time!\n");
 	/*fork_test();*/
 	/*sleep_test();*/
 	/*exit_test();*/

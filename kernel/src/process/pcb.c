@@ -13,6 +13,8 @@
 
 #define Sleeptime 5
 
+#define NR_FILE 32
+
 int printk(const char *fmt, ...);
 extern struct PCB *current;
 void set_tss_esp0(uint32_t);
@@ -148,6 +150,9 @@ void process_fork()
 	
 	//copy trap frame
 	memcpy(pcb_table[pcb_index].kstack, current->kstack, KSTACK_SIZE);
+
+	//copy fcb
+	memcpy(pcb_table[pcb_index].fcb, current->fcb, sizeof(int)*NR_FILE);
 	
 	//modify kernel stack
 	struct TrapFrame *tf = (struct TrapFrame *)(pcb_table[pcb_index].kstack + 4096 - sizeof(struct TrapFrame));

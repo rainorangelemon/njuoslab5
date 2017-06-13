@@ -46,7 +46,6 @@ void init_cond()
 
 	pcb_init();
 	file_init();
-	inode_init();
 //get pcb for init process
 	int pcb_index = get_pcb();
 	int pid = get_pid();

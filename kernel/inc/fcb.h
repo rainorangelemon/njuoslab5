@@ -11,11 +11,9 @@
 
 struct FCB {
 	int f_state;			//文件状态
-	int act_inode_index;
-	int inode_bitoffset;	//inode位置
-	int ch_offset;			//文件指针的字节偏移
-	int buf_offset;			//缓冲区对应的块偏移
-	char buf[512 * 4];
+	struct iNode inode;
+	int offset;			//文件指针的字节偏移
+	int count;
 };
 
 struct map bitmap;
@@ -26,8 +24,6 @@ struct dir direct;			//这两项必须在加载文件之前就从磁盘读出
 
 void file_init();
 int file_alloc();
-void inode_init();
-int inode_alloc();
 
 int open(char*, int);
 int read(int, char*, int);

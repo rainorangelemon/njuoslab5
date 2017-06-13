@@ -4,7 +4,7 @@
 #include "./mmu.h"
 
 #define KSTACK_SIZE 4096
-#define NR_FILE 20
+#define NR_FILE 32
 struct PCB { 
 	struct TrapFrame *tf;
 	uint8_t kstack[KSTACK_SIZE];
