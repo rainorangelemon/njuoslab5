@@ -70,6 +70,7 @@ int main()
 	fseek(diskfp, 0, SEEK_SET);
 	fwrite(&boot, 1, 512, diskfp);
 
+
 	fclose(diskfp);
 
 }

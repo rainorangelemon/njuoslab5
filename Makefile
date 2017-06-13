@@ -63,8 +63,7 @@ $(IMAGE): $(BOOT) $(PROGRAM)
 	gcc copy2myfs.c -o copy2myfs
 	gcc read_myfs.c -o read_myfs
 	./formatter	
-	./copy2myfs $(KERNEL) $(GAME)
-	./copy2myfs game_load.txt
+	./copy2myfs $(KERNEL) $(GAME) game_load.txt
 #	@$(DD) if=/dev/zero of=$(IMAGE) count=10000         > /dev/null # 准备磁盘文件
 #	@$(DD) if=$(BOOT) of=$(IMAGE) conv=notrunc          > /dev/null # 填充 boot loader
 #	@$(DD) if=$(PROGRAM) of=$(IMAGE) seek=1 conv=notrunc > /dev/null # 填充 kernel, 跨过 mbr
@@ -136,3 +135,4 @@ clean:
 	@rm ./copy2myfs    2> /dev/null
 	@rm ./read_myfs    2> /dev/null
 	@rm ./formatter    2> /dev/null
+	@rm ./kernel.bak    2> /dev/null

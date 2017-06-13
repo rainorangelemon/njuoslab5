@@ -9,7 +9,7 @@ struct dir direct;
 int main(int argc, char *argv[])
 {
 	FILE *fp=fopen("disk.bin","rb");
-	FILE *new_fp=fopen("readfile","wb");
+	FILE *new_fp=fopen("read_files/readfile","wb");
 	if(fp == NULL){
 		printf("open failed\n");
         	exit(0);
@@ -17,14 +17,14 @@ int main(int argc, char *argv[])
 	fseek(fp, 512,SEEK_SET);
         fread(&bitmap, 1, sizeof(bitmap), fp);
     	fread(&direct, 1, sizeof(direct), fp);
-	int y;
-	for(y=0;y<BITMAP_USED_BYTE+4;y++){
-		printf("%x\n",bitmap.mask[y].byte);
-	}
+//	int y;
+//	for(y=0;y<BITMAP_USED_BYTE+4;y++){
+//		printf("%x\n",bitmap.mask[y].byte);
+//	}
     int i;
     char buf[513];
     for(i = 0; i < NR_DIR_ENTRY; i ++){
-	 if(direct.entry[i].inode_offset != -1){
+	 if((direct.entry[i].inode_offset != -1)&&(strcmp(direct.entry[i].filename,argv[1])==0)){
 	    int size=0;
 	    struct iNode inode;
 	    fseek(fp, 512+direct.entry[i].inode_offset * 512, SEEK_SET);
@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
 			fread(buf, 1, 512, fp);
 			fwrite(buf,1,512,new_fp);
 			int k;
-			for(k=0;k<512;k++)
-				printf("%c", buf[k]);
+//			for(k=0;k<512;k++)
+//				printf("%c", buf[k]);
 		}else{
 			break;
 		}

@@ -86,11 +86,11 @@ int main(int argc, char *argv[])
 	}
 	fseek(diskfp,512,SEEK_SET);
 	fread(&bitmap,1,sizeof(bitmap),diskfp);
-	printf("%lu,%d\n",sizeof(bitmap),32*8*512);
+	//printf("%lu,%d\n",sizeof(bitmap),32*8*512);
 	int i;
-	for(i=0;i<BITMAP_USED_BYTE+4;i++){
-		printf("%x\n",bitmap.mask[i].byte);
-	}
+//	for(i=0;i<BITMAP_USED_BYTE+4;i++){
+//		printf("%x\n",bitmap.mask[i].byte);
+//	}
 	fseek(diskfp,512+sizeof(bitmap),SEEK_SET);
 	fread(&direct,1,sizeof(direct),diskfp);
 	
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 //----------------fill bitmap----------------
 		bit_alloc(&bitoffset,alloc_inode);
 		//this number is the file's inode bit index, counting from 0
-		printf("this file's inode bit index is %d\n", bitoffset);
+		//printf("this file's inode bit index is %d\n", bitoffset);
 
 //--------------fill a direct entry--------------
 		for(index = 0; index < NR_DIR_ENTRY; index ++)
@@ -146,10 +146,10 @@ int main(int argc, char *argv[])
 			memset(buf, '\0', sizeof(buf));
 
 			fread(buf, 1, 512, fp);
-printf("the buf is\n\t%s\n\n", buf);
+//printf("the buf is\n\t%s\n\n", buf);
 			int inode_entry = 0;
 			bit_alloc(&inode_entry,alloc_data);
-printf("the block's bit index for this buf is %d\n", inode_entry);
+//printf("the block's bit index for this buf is %d\n", inode_entry);
 			if(entry_index < NR_INODE_ENTRY)
 				inode.data_block_offset[entry_index]=inode_entry;
 			else
@@ -159,7 +159,7 @@ printf("the block's bit index for this buf is %d\n", inode_entry);
 				for(inode_entry_index = 0; inode_entry_index <= NR_INODE_ENTRY; inode_entry_index ++)
 					inode.data_block_offset[inode_entry_index] = -1;
 				bit_alloc(&bitoffset,alloc_inode);
-				printf("this file's new inode bit index is %d\n", bitoffset);
+//				printf("this file's new inode bit index is %d\n", bitoffset);
 				inode.data_block_offset[0]=inode_entry;	
 				fseek(diskfp, inode_entry * 512+512, SEEK_SET);
 				fwrite(buf, 1, 512, diskfp);
@@ -173,11 +173,14 @@ printf("the block's bit index for this buf is %d\n", inode_entry);
 			entry_index ++;
 		}
 		fseek(diskfp, direct.entry[index].inode_offset * 512+inode_num*512+512, SEEK_SET);
-		fwrite(&inode, 1, 512, diskfp);		
+		fwrite(&inode, 1, 512, diskfp);	
+		int tt;
+//		for(int i=0;i<NR_INODE_ENTRY;i++){
+//			printf("inode_data_offset:%d\n",inode.data_block_offset[i]);
+//		}	
 	}
 	fseek(diskfp,512+direct.entry[index].inode_offset*512,SEEK_SET);
 	fread(&inode,1,512,diskfp);
-	printf("inode_data_offset:%d\n",inode.data_block_offset[0]);
 	fseek(diskfp,512,SEEK_SET);
 	fwrite(&bitmap,1,sizeof(bitmap),diskfp);
 	fseek(diskfp,512+sizeof(bitmap),SEEK_SET);
